@@ -9,6 +9,8 @@ import {
 
 import DisplayProducts from "./displayProducts";
 import Cart from "./cart";
+import SignIn from "./signin";
+import Checkout from "./checkout";
 
 function NavBarComponent({
   siteName,
@@ -59,8 +61,10 @@ function NavBarComponent({
         />
         <Route
           path="/cart"
-          element={<Cart products={products} />}
+          element={<Cart products={products} totalQty={totalQty} />}
         />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/checkout" element={<Checkout products={products} />} />
       </Routes>
     </>
   );

@@ -35,7 +35,10 @@ class App extends Component {
   };
 
   getTotalQty = () => {
-    return this.state.products.reduce((total, product) => total + product.value, 0);
+    return this.state.products.reduce(
+      (total, product) => total + product.value,
+      0
+    );
   };
 
   render() {
