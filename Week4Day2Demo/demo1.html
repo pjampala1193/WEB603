@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Demo 1 - DOM Practice</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    h1, h2, p, ul, li {
+      border: 1px solid #ccc;
+      padding: 14px;
+      margin: 12px 0;
+    }
+
+    ul {
+      padding-left: 40px;
+    }
+
+    li {
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Shark World</h1>
+
+  <p>
+    The world's leading source on <strong>shark</strong> related information.
+  </p>
+
+  <h2>Types of Sharks</h2>
+
+  <ul>
+    <li>Hammerhead</li>
+    <li>Tiger</li>
+    <li>Great White</li>
+  </ul>
+
+  <script>
+    // Uncomment these if you want direct variable access in console
+    const p = document.querySelector("p");
+    const ul = document.querySelector("ul");
+    const li = document.querySelectorAll("li");
+  </script>
+</body>
+</html>

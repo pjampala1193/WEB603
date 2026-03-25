@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Demo 3 - Factorial</title>
+</head>
+<body>
+  <h1>Demo 3 - Factorial</h1>
+  <p>Open the console to test factorial timing.</p>
+
+  <script>
+    function factorial(n) {
+      if (n === 0 || n === 1) {
+        return 1;
+      }
+      return n * factorial(n - 1);
+    }
+
+    function testFactorial(n) {
+      const start = performance.now();
+      const result = factorial(n);
+      const end = performance.now();
+
+      console.log(`factorial(${n}) = ${result}`);
+      console.log(`Time taken: ${(end - start).toFixed(4)} ms`);
+      console.log('-----------------------------');
+    }
+
+    testFactorial(1);
+    testFactorial(10);
+    testFactorial(12);
+  </script>
+</body>
+</html>

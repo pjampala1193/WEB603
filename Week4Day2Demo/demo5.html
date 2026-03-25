@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Demo 5 - Delete Object Property</title>
+</head>
+<body>
+  <h1>Demo 5 - Delete Property</h1>
+  <p id="demo"></p>
+
+  <script>
+  let person = {
+    firstname: "John",
+    age: 30
+  };
+
+  delete person.age;
+
+  document.getElementById("demo").innerHTML =
+    person.firstname + " is " + person.age + " years old.";
+
+  console.log(person.age); // undefined
+</script>
+</body>
+</html>

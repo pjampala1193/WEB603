@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Demo 2 - Quicksort</title>
+</head>
+<body>
+  <h1>Demo 2 - Quicksort</h1>
+  <p>Open the console to see the sorted arrays.</p>
+
+  <script>
+    function sort(arr) {
+      if (arr.length <= 1) {
+        return arr;
+      }
+
+      const pivot = arr[arr.length - 1];
+      const left = [];
+      const right = [];
+
+      for (let i = 0; i < arr.length - 1; i++) {
+        if (arr[i] < pivot) {
+          left.push(arr[i]);
+        } else {
+          right.push(arr[i]);
+        }
+      }
+
+      return [...sort(left), pivot, ...sort(right)];
+    }
+
+    const smArr = [37, 29, 30];
+    const bigArr = [43, 59, 29, 18];
+
+    console.log(sort(smArr));
+    console.log(sort(bigArr));
+  </script>
+</body>
+</html>
