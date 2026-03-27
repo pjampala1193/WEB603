@@ -1,70 +1,65 @@
-import React, { useState } from "react";
-import {
-  Container,
-  Row,
-  Col,
-  Card,
-  Button,
-  Modal
-} from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faPlus,
-  faMinus,
-  faStar
-} from "@fortawesome/free-solid-svg-icons";
+import React from "react";
+import { Container, Row, Col, Card, Button, Form } from "react-bootstrap";
 
-function DisplayProducts({ products, handleAdd, handleSubtract }) {
-  const [show, setShow] = useState(false);
-  const [activeProduct, setActiveProduct] = useState(null);
-
-  const handleClose = () => setShow(false);
-
-  const handleShow = (product) => {
-    setActiveProduct(product);
-    setShow(true);
-  };
-
+function DisplayProducts({
+  products,
+  handleAdd,
+  handleSubtract,
+  sortType,
+  handleSortChange
+}) {
   return (
-    <Container className="py-4">
-      <Row className="g-4">
+    <Container className="mt-4">
+      <Row className="mb-4">
+        <Col md={4}>
+          <Form.Group>
+            <Form.Label className="fw-bold">Sort By Price</Form.Label>
+            <Form.Select value={sortType} onChange={handleSortChange}>
+              <option value="normal">Normal</option>
+              <option value="lowest">Lowest</option>
+              <option value="highest">Highest</option>
+            </Form.Select>
+          </Form.Group>
+        </Col>
+      </Row>
+
+      <Row>
         {products.map((product) => (
-          <Col md={6} lg={6} key={product.id}>
-            <Card className="product-card h-100 shadow-sm">
-              <Card.Body>
-                <div className="text-center mb-3">
-                  <img
-                    src={product.image}
-                    alt={product.desc}
-                    className="product-img"
-                    onClick={() => handleShow(product)}
-                  />
-                </div>
+          <Col md={3} sm={6} xs={12} className="mb-4" key={product.id}>
+            <Card className="h-100 shadow-sm">
+              <Card.Img
+                variant="top"
+                src={product.image}
+                alt={product.desc}
+                style={{ height: "220px", objectFit: "contain", padding: "15px" }}
+              />
 
-                <Card.Title className="fw-bold text-center">
-                  {product.desc}
-                </Card.Title>
-
-                <Card.Text className="text-center text-muted mb-3">
-                  <FontAwesomeIcon icon={faStar} className="me-2 text-warning" />
-                  {product.ratings} / 5
+              <Card.Body className="d-flex flex-column">
+                <Card.Title>{product.desc}</Card.Title>
+                <Card.Text className="mb-2">
+                  <strong>Price:</strong> ${product.price}
+                </Card.Text>
+                <Card.Text className="mb-3">
+                  <strong>Ratings:</strong> {product.ratings}
                 </Card.Text>
 
-                <div className="d-flex justify-content-center align-items-center gap-3">
+                <div className="mt-auto d-flex align-items-center justify-content-center gap-2">
+                  <Button variant="success" onClick={() => handleAdd(product.id)}>
+                    +
+                  </Button>
+
+                  <Form.Control
+                    type="text"
+                    value={product.value}
+                    readOnly
+                    style={{ width: "60px", textAlign: "center" }}
+                  />
+
                   <Button
                     variant="danger"
                     onClick={() => handleSubtract(product.id)}
                   >
-                    <FontAwesomeIcon icon={faMinus} />
-                  </Button>
-
-                  <span className="qty-box">{product.value}</span>
-
-                  <Button
-                    variant="success"
-                    onClick={() => handleAdd(product.id)}
-                  >
-                    <FontAwesomeIcon icon={faPlus} />
+                    -
                   </Button>
                 </div>
               </Card.Body>
@@ -72,30 +67,6 @@ function DisplayProducts({ products, handleAdd, handleSubtract }) {
           </Col>
         ))}
       </Row>
-
-      <Modal show={show} onHide={handleClose} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>{activeProduct ? activeProduct.desc : ""}</Modal.Title>
-        </Modal.Header>
-
-        <Modal.Body className="text-center">
-          {activeProduct && (
-            <>
-              <img
-                src={activeProduct.image}
-                alt={activeProduct.desc}
-                className="modal-product-img mb-3"
-              />
-              <p className="mb-2">
-                <strong>Product:</strong> {activeProduct.desc}
-              </p>
-              <p className="mb-0">
-                <strong>Ratings:</strong> {activeProduct.ratings} / 5
-              </p>
-            </>
-          )}
-        </Modal.Body>
-      </Modal>
     </Container>
   );
 }

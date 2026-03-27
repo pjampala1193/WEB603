@@ -10,7 +10,8 @@ class App extends Component {
 
     this.state = {
       siteName: "Shop to React",
-      products: productsData
+      products: productsData,
+      sortType: "normal"
     };
   }
 
@@ -34,6 +35,27 @@ class App extends Component {
     }));
   };
 
+  handleSortChange = (event) => {
+    const sortType = event.target.value;
+
+    this.setState((prevState) => {
+      let sortedProducts = [...prevState.products];
+
+      if (sortType === "normal") {
+        sortedProducts.sort((a, b) => a.id - b.id);
+      } else if (sortType === "lowest") {
+        sortedProducts.sort((a, b) => a.price - b.price);
+      } else if (sortType === "highest") {
+        sortedProducts.sort((a, b) => b.price - a.price);
+      }
+
+      return {
+        sortType: sortType,
+        products: sortedProducts
+      };
+    });
+  };
+
   getTotalQty = () => {
     return this.state.products.reduce(
       (total, product) => total + product.value,
@@ -50,6 +72,8 @@ class App extends Component {
           totalQty={this.getTotalQty()}
           handleAdd={this.handleAdd}
           handleSubtract={this.handleSubtract}
+          sortType={this.state.sortType}
+          handleSortChange={this.handleSortChange}
         />
       </div>
     );

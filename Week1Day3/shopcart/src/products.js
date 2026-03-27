@@ -1,32 +1,36 @@
-const productsData = [
+const products = [
   {
     id: 1,
-    image: "/products/cologne.jpg",
+    image: "./products/cologne.jpg",
     desc: "Unisex Cologne",
-    ratings: "4.5",
+    price: 35,
+    ratings: "4",
     value: 0
   },
   {
     id: 2,
-    image: "/products/iwatch.jpg",
+    image: "./products/iwatch.jpg",
     desc: "Apple iWatch",
-    ratings: "4.8",
+    price: 199,
+    ratings: "3.5",
     value: 0
   },
   {
     id: 3,
-    image: "/products/mug.jpg",
+    image: "./products/mug.jpg",
     desc: "Unique Mug",
-    ratings: "4.2",
+    price: 15,
+    ratings: "5",
     value: 0
   },
   {
     id: 4,
-    image: "/products/wallet.jpg",
+    image: "./products/wallet.jpg",
     desc: "Mens Wallet",
-    ratings: "4.4",
+    price: 48,
+    ratings: "4.5",
     value: 0
   }
 ];
 
-export default productsData;
+export default products;

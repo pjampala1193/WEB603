@@ -17,7 +17,9 @@ function NavBarComponent({
   products,
   totalQty,
   handleAdd,
-  handleSubtract
+  handleSubtract,
+  sortType,
+  handleSortChange
 }) {
   return (
     <>
@@ -56,6 +58,8 @@ function NavBarComponent({
               products={products}
               handleAdd={handleAdd}
               handleSubtract={handleSubtract}
+              sortType={sortType}
+              handleSortChange={handleSortChange}
             />
           }
         />
