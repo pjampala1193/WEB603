@@ -1,74 +1,61 @@
 import React, { useState } from "react";
-import { Modal, Button } from "react-bootstrap";
+import axios from "axios";
+import { useNavigate, Link } from "react-router-dom";
 
-function CreateList(props) {
-  const [show, setShow] = useState(false);
+function CreateList() {
+  const [title, setTitle] = useState("");
+  const [author, setAuthor] = useState("");
+  const navigate = useNavigate();
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => {
-    const newId =
-      props.alldata.length > 0
-        ? Math.max(...props.alldata.map((item) => Number(item.id))) + 1
-        : 1;
+  const saveBook = async (e) => {
+    e.preventDefault();
 
-    props.singledata.id = newId;
-    props.singledata.title = "";
-    props.singledata.author = "";
-
-    handleClose();
-    setShow(true);
+    try {
+      await axios.post("http://localhost:5001/books", {
+        title,
+        author,
+      });
+      navigate("/");
+    } catch (error) {
+      console.error("Error creating book:", error);
+    }
   };
 
   return (
-    <React.Fragment>
-      <Button variant="primary" onClick={handleShow}>
-        Create New List
-      </Button>
+    <div className="border border-primary p-4">
+      <h2 className="mb-4">Add Book</h2>
 
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>New List</Modal.Title>
-        </Modal.Header>
-
-        <Modal.Body>
-          <input type="hidden" value={props.singledata.id} readOnly />
-
+      <form onSubmit={saveBook}>
+        <div className="mb-3">
+          <label className="form-label">Book Title</label>
           <input
             type="text"
-            placeholder="Title"
-            name="title"
-            value={props.singledata.title}
-            onChange={props.handleChange}
-            className="form-control my-3"
+            className="form-control"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required
           />
+        </div>
 
+        <div className="mb-3">
+          <label className="form-label">Author</label>
           <input
             type="text"
-            placeholder="Author"
-            name="author"
-            value={props.singledata.author}
-            onChange={props.handleChange}
-            className="form-control my-3"
+            className="form-control"
+            value={author}
+            onChange={(e) => setAuthor(e.target.value)}
+            required
           />
-        </Modal.Body>
+        </div>
 
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-
-          <Button
-            variant="primary"
-            onClick={() => {
-              handleClose();
-              props.createList();
-            }}
-          >
-            Create
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </React.Fragment>
+        <button type="submit" className="btn btn-primary me-2">
+          Save
+        </button>
+        <Link to="/" className="btn btn-secondary">
+          Cancel
+        </Link>
+      </form>
+    </div>
   );
 }
 

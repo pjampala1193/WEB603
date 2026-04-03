@@ -1,67 +1,76 @@
-import React, { useState } from "react";
-import { Modal, Button } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate, useParams, Link } from "react-router-dom";
 
-function UpdateList(props) {
-  const [show, setShow] = useState(false);
+function UpdateList() {
+  const [title, setTitle] = useState("");
+  const [author, setAuthor] = useState("");
+  const navigate = useNavigate();
+  const { id } = useParams();
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  useEffect(() => {
+    getBookById();
+  }, []);
+
+  const getBookById = async () => {
+    try {
+      const response = await axios.get(`http://localhost:5001/books/${id}`);
+      setTitle(response.data.title);
+      setAuthor(response.data.author);
+    } catch (error) {
+      console.error("Error fetching book:", error);
+    }
+  };
+
+  const updateBook = async (e) => {
+    e.preventDefault();
+
+    try {
+      await axios.put(`http://localhost:5001/books/${id}`, {
+        title,
+        author,
+      });
+      navigate("/");
+    } catch (error) {
+      console.error("Error updating book:", error);
+    }
+  };
 
   return (
-    <React.Fragment>
-      <Button
-        variant="warning"
-        size="sm"
-        onClick={(evt) => {
-          handleShow();
-          props.getList(evt, props.elementId);
-        }}
-      >
-        Update
-      </Button>
+    <div className="border border-primary p-4">
+      <h2 className="mb-4">Edit Book</h2>
 
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Update List</Modal.Title>
-        </Modal.Header>
-
-        <Modal.Body>
+      <form onSubmit={updateBook}>
+        <div className="mb-3">
+          <label className="form-label">Book Title</label>
           <input
             type="text"
-            placeholder="Title"
-            name="title"
-            value={props.singledata.title}
-            onChange={props.handleChange}
-            className="form-control my-3"
+            className="form-control"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required
           />
+        </div>
 
+        <div className="mb-3">
+          <label className="form-label">Author</label>
           <input
             type="text"
-            placeholder="Author"
-            name="author"
-            value={props.singledata.author}
-            onChange={props.handleChange}
-            className="form-control my-3"
+            className="form-control"
+            value={author}
+            onChange={(e) => setAuthor(e.target.value)}
+            required
           />
-        </Modal.Body>
+        </div>
 
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-
-          <Button
-            variant="primary"
-            onClick={(evt) => {
-              handleClose();
-              props.updateList(evt, props.elementId);
-            }}
-          >
-            Update
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </React.Fragment>
+        <button type="submit" className="btn btn-primary me-2">
+          Save
+        </button>
+        <Link to="/" className="btn btn-secondary">
+          Cancel
+        </Link>
+      </form>
+    </div>
   );
 }
 
