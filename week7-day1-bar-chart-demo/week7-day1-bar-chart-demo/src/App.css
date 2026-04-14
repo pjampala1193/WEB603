@@ -1,0 +1,45 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f3f4f6;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #1f2937;
+  padding: 15px 24px;
+}
+
+.nav-title {
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  margin-left: 14px;
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+.nav-links a:hover {
+  background: #374151;
+}
+
+.active-link {
+  background: #2563eb;
+}
+
+.container {
+  padding: 24px;
+}
+
+.page {
+  background: white;
+  padding: 24px;
+  border-radius: 8px;
+}
